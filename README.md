@@ -32,7 +32,7 @@ Koharu introduces a local-first workflow for manga translation, utilizing the po
 
 ## Features
 
-- [Multi-format project management](https://koharu.rs/guides/projects) for raster images, archives, and PDFs with page sequencing
+- [Multi-format project management](https://koharu.rs/guides/projects) for raster images, archives, PDFs, and EPUBs with page sequencing
 - [Selective pipeline](https://koharu.rs/guides/processing) for detection, OCR, translation, and inpainting at page or project scope
 - [Detection and segmentation](https://koharu.rs/guides/processing) for text regions, speech bubbles, and cleanup regions
 - [Multimodal OCR](https://koharu.rs/models/vision) for dialogue, captions, and general page text

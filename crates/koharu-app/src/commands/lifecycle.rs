@@ -349,7 +349,7 @@ pub(crate) async fn import(
         .flat_map(|format| format.get_serializations())
         .collect::<Vec<_>>();
     let dialog = rfd::AsyncFileDialog::new()
-        .add_filter("Images, archives, and PDF", &extensions)
+        .add_filter("Images, archives, PDF, and EPUB", &extensions)
         .set_parent(&window);
     let files = match source {
         PageImportSource::Files => dialog.pick_files().await.map(|files| {

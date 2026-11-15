@@ -10,6 +10,7 @@ use image::{ImageFormat, ImageReader};
 use rayon::prelude::*;
 use strum::{EnumIter, EnumMessage, EnumString};
 
+mod epub;
 mod pdf;
 mod rar;
 mod zip;
@@ -30,6 +31,8 @@ pub(super) enum Format {
     Rar,
     #[strum(serialize = "pdf")]
     Pdf,
+    #[strum(serialize = "epub")]
+    Epub,
 }
 
 #[derive(Debug)]
@@ -94,6 +97,7 @@ pub(super) fn import(mut paths: Vec<PathBuf>) -> Result<Vec<Page>> {
                 Some(Format::Zip) => zip::extract(&path)?,
                 Some(Format::Rar) => rar::extract(&path)?,
                 Some(Format::Pdf) => pdf::render(&path)?,
+                Some(Format::Epub) => epub::extract(&path)?,
                 None => bail!("unsupported page import path {}", path.display()),
             };
             encoded

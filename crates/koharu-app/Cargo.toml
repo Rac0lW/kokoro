@@ -35,6 +35,7 @@ parking_lot = { workspace = true }
 rayon = { workspace = true }
 rars = { workspace = true }
 rfd = { workspace = true }
+roxmltree = { workspace = true }
 schemars = { workspace = true }
 serde = { workspace = true }
 serde_json = { workspace = true }
