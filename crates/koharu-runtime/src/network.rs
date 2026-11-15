@@ -43,6 +43,11 @@ pub(crate) fn http() -> Result<Client> {
     let client = Client::builder()
         .user_agent(USER_AGENT)
         .connect_timeout(Duration::from_secs(config.connect_timeout.max(1)))
+        // A provider that accepts the connection and then stalls would otherwise
+        // hold the request, and with it the whole job, open forever. `read_timeout`
+        // bounds the wait between bytes rather than the whole response, so a long
+        // but progressing stream is unaffected.
+        .read_timeout(Duration::from_secs(config.read_timeout.max(1)))
         .http2_adaptive_window(true)
         .tcp_keepalive(Duration::from_secs(60))
         .build()
