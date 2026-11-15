@@ -159,3 +159,104 @@ async fn rejects_stale_saves() {
         Err(Error::RevisionConflict { .. })
     ));
 }
+
+// A crash inside `publish` can only leave the target slot as its previous
+// content, absent, or the new content. Each case below lands the session in one
+// of those states and asserts what `open` recovers.
+//
+// Slots alternate: create writes A, revision 1 writes B, revision 2 writes A.
+
+use crate::durability::{FailPoint, fail_at};
+
+async fn session_at_revision_one(root: &std::path::Path) -> usize {
+    let session = Session::create(root, DocumentId::new(), Bytes::from_static(b"r0"))
+        .await
+        .unwrap();
+    let r0 = session.load().await.unwrap();
+    let r1 = r0
+        .update(Revision::new(1), Bytes::from_static(b"r1"), [], [])
+        .unwrap();
+    session.save(&r1).await.unwrap();
+    session.load().await.unwrap();
+    assert_eq!(session.revision(), Revision::new(1));
+    1
+}
+
+#[tokio::test]
+async fn crash_before_removing_newest_slot_keeps_previous_revision() {
+    let root = tempfile::tempdir().unwrap();
+    session_at_revision_one(root.path()).await;
+
+    let session = Session::open(root.path()).await.unwrap();
+    let current = session.load().await.unwrap();
+    let next = current
+        .update(Revision::new(2), Bytes::from_static(b"r2"), [], [])
+        .unwrap();
+    fail_at(root.path(), FailPoint::BeforeRemove);
+    let error = session.save(&next).await.expect_err("injected crash");
+    drop(session);
+    drop((current, next, error));
+
+    let reopened = Session::open(root.path()).await.unwrap();
+    assert_eq!(reopened.revision(), Revision::new(1));
+    assert_eq!(
+        reopened.load().await.unwrap().payload(),
+        &Bytes::from_static(b"r1")
+    );
+}
+
+#[tokio::test]
+async fn crash_after_removing_newest_slot_falls_back_to_previous_slot() {
+    let root = tempfile::tempdir().unwrap();
+    session_at_revision_one(root.path()).await;
+
+    let session = Session::open(root.path()).await.unwrap();
+    let current = session.load().await.unwrap();
+    let next = current
+        .update(Revision::new(2), Bytes::from_static(b"r2"), [], [])
+        .unwrap();
+    fail_at(root.path(), FailPoint::AfterRemove);
+    let error = session.save(&next).await.expect_err("injected crash");
+    drop(session);
+    drop((current, next, error));
+
+    // The removal happened and the rename never did, so the slot is gone.
+    assert!(!root.path().join("state-a.khr").exists());
+    let reopened = Session::open(root.path()).await.unwrap();
+    assert_eq!(reopened.revision(), Revision::new(1));
+}
+
+#[tokio::test]
+async fn crash_after_rename_leaves_the_new_revision_readable() {
+    let root = tempfile::tempdir().unwrap();
+    session_at_revision_one(root.path()).await;
+
+    let session = Session::open(root.path()).await.unwrap();
+    let current = session.load().await.unwrap();
+    let next = current
+        .update(Revision::new(2), Bytes::from_static(b"r2"), [], [])
+        .unwrap();
+    fail_at(root.path(), FailPoint::AfterRename);
+    let error = session.save(&next).await.expect_err("injected crash");
+    drop(session);
+    drop((current, next, error));
+
+    // The rename is the publication point, so the revision survives even though
+    // the caller saw a failure.
+    let reopened = Session::open(root.path()).await.unwrap();
+    assert_eq!(reopened.revision(), Revision::new(2));
+}
+
+#[tokio::test]
+async fn absent_newest_state_falls_back_to_previous_slot() {
+    let root = tempfile::tempdir().unwrap();
+    session_at_revision_one(root.path()).await;
+
+    fs::remove_file(root.path().join("state-b.khr")).unwrap();
+    let reopened = Session::open(root.path()).await.unwrap();
+    assert_eq!(reopened.revision(), Revision::ZERO);
+    assert_eq!(
+        reopened.load().await.unwrap().payload(),
+        &Bytes::from_static(b"r0")
+    );
+}
