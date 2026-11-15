@@ -5,7 +5,7 @@
 <p align="center">A personal fork of <a href="https://github.com/koharu-rs/koharu" target="_blank">Koharu</a>.</p>
 
 <p align="center">
-<a href="https://koharu.rs/installation" target="_blank">Getting Started</a> · <a href="https://koharu.rs/" target="_blank">Docs</a> · <a href="https://github.com/Rac0lW/koharu/issues" target="_blank">Bug reports</a>
+<a href="https://koharu.rs/installation" target="_blank">Getting Started</a> · <a href="https://koharu.rs/" target="_blank">Docs</a> · <a href="https://github.com/Rac0lW/kokoro/issues" target="_blank">Bug reports</a>
 </p>
 
 <p align="center">
