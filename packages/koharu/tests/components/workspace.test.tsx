@@ -128,7 +128,7 @@ function renderWorkspace() {
       </TooltipProvider>
     </QueryClientProvider>,
   )
-  const surface = screen.getByLabelText('Koharu canvas')
+  const surface = screen.getByLabelText('Kokoro canvas')
   Object.defineProperty(surface, 'getBoundingClientRect', {
     value: () => ({ x: 10, y: 20, width: 800, height: 600 }),
   })

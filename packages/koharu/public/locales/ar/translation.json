@@ -18,45 +18,10 @@
     "stop": "إيقاف",
     "title": "النشاط"
   },
-  "agent": {
-    "account": "حساب ChatGPT",
-    "applying": "جارٍ تطبيق تغييرات المشروع...",
-    "automatic": "تلقائي",
-    "cancel": "إلغاء",
-    "cancelled": "أُلغي.",
-    "deviceCode": "رمز الجهاز",
-    "deviceCodeHint": "تم فتح متصفحك. أدخل هذا الرمز لتفويض Koharu.",
-    "emptyDescription": "اطلب من Agent فحص هذا المشروع أو ترجمته أو تعديله أو معالجته. لن يعرض صور الصفحات إلا عند الحاجة.",
-    "emptyTitle": "ماذا ينبغي أن يفعل Koharu؟",
-    "failed": "فشل طلب Agent.",
-    "loading": "جارٍ تحميل Codex...",
-    "message": "راسل Koharu Agent",
-    "model": "نموذج Codex",
-    "placeholder": "اطلب من Koharu العمل على هذا المشروع...",
-    "properties": "الخصائص",
-    "reasoning": "التفكير",
-    "reasoningLevels": {
-      "high": "عالٍ",
-      "low": "منخفض",
-      "max": "الأقصى",
-      "medium": "متوسط",
-      "ultra": "فائق",
-      "xhigh": "عالٍ جدًا"
-    },
-    "send": "إرسال",
-    "signIn": "تسجيل الدخول عبر Codex",
-    "signInDescription": "سجّل الدخول باستخدام اشتراك ChatGPT. يستخدم Koharu مصادقة رمز الجهاز ولا يطلب API key أبدًا.",
-    "signInTitle": "ربط Codex",
-    "signOut": "تسجيل الخروج",
-    "signingIn": "في انتظار تسجيل الدخول...",
-    "thinking": "جارٍ التفكير...",
-    "title": "Agent",
-    "working": "جارٍ العمل..."
-  },
   "canvas": {
     "empty": "اختر صفحة للبدء.",
     "fit": "ملاءمة النافذة",
-    "surface": "لوحة Koharu",
+    "surface": "لوحة Kokoro",
     "unavailable": "لوحة WebGPU غير متاحة"
   },
   "colorPicker": {
@@ -73,7 +38,7 @@
     "reset": "إعادة ضبط"
   },
   "errors": {
-    "fatalTitle": "تعذّر على Koharu المتابعة",
+    "fatalTitle": "تعذّر على Kokoro المتابعة",
     "tryAgain": "أعد المحاولة"
   },
   "fontPicker": {
@@ -456,10 +421,10 @@
       "addFamily": "إضافة عائلة خطوط",
       "defaultFamilies": "عائلات الخطوط الافتراضية",
       "description": "عيّن مجموعة الخطوط المرتّبة المستخدمة عندما لا يكون لطبقة النص عائلة معيّنة.",
-      "empty": "لا توجد عائلات افتراضية. سيستخدم Koharu البديل من النظام.",
+      "empty": "لا توجد عائلات افتراضية. سيستخدم Kokoro البديل من النظام.",
       "familyLabel": "عائلة الخطوط الافتراضية {{index}}",
       "fontFallback": "بديل الخطوط",
-      "fontFallbackDescription": "يستخدم Koharu أول عائلة متاحة تدعم النص.",
+      "fontFallbackDescription": "يستخدم Kokoro أول عائلة متاحة تدعم النص.",
       "loadError": "تعذّر تحميل الخطوط. لا يزال بإمكانك إزالة العائلات الحالية.",
       "loadingFonts": "جارٍ تحميل الخطوط…",
       "removeFamily": "إزالة {{family}}",
@@ -479,7 +444,7 @@
     "loadingProjects": "جارٍ تحميل المشاريع…",
     "newDescription": "أنشئ مساحة عمل نظيفة لصفحاتك وترجماتك وعمليات التصدير.",
     "newProject": "مشروع جديد",
-    "projectKind": "مشروع Koharu",
+    "projectKind": "مشروع Kokoro",
     "projectList": "المشاريع",
     "projectName": "اسم المشروع",
     "projectNamePlaceholder": "مشروعي الجديد",
@@ -489,9 +454,9 @@
   },
   "startup": {
     "description": "جارٍ تحميل بيئات الذكاء الاصطناعي المحلية وتحضير مساحة العمل. قد يستغرق التشغيل الأول لحظة.",
-    "opening": "جارٍ فتح Koharu…",
+    "opening": "جارٍ فتح Kokoro…",
     "status": "تهيئة البيئات المحلية",
-    "title": "تحضير Koharu"
+    "title": "تحضير Kokoro"
   },
   "status": {
     "zoom": "تكبير"
@@ -513,12 +478,12 @@
   },
   "updater": {
     "available": {
-      "description": "Koharu <strong>{{version}}</strong> جاهز للتثبيت",
+      "description": "Kokoro <strong>{{version}}</strong> جاهز للتثبيت",
       "title": "يتوفّر تحديث"
     },
     "close": "إغلاق",
     "downloading": {
-      "subtitle": "Koharu {{version}}",
+      "subtitle": "Kokoro {{version}}",
       "title": "جارٍ تنزيل التحديث…"
     },
     "error": {

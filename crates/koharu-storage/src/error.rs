@@ -8,11 +8,11 @@ pub enum Error {
     Io(#[from] std::io::Error),
     #[error(transparent)]
     Codec(#[from] revision::Error),
-    #[error("not a Koharu project")]
+    #[error("not a Kokoro project")]
     NotAProject,
     #[error("project is already open for writing")]
     Locked,
-    #[error("unsupported Koharu project format {0}")]
+    #[error("unsupported Kokoro project format {0}")]
     UnsupportedFormat(u32),
     #[error("state belongs to document {state}, not {session}")]
     DocumentMismatch {

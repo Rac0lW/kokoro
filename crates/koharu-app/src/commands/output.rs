@@ -1,3 +1,5 @@
+use std::path::PathBuf;
+
 use anyhow::{Context as _, Result};
 use futures::future::try_join_all;
 use image::{
@@ -5,9 +7,8 @@ use image::{
     codecs::png::{CompressionType, FilterType, PngEncoder},
 };
 use koharu_psd::{PsdExportOptions, export_page};
-use koharu_rasterizer::{Raster, RasterOptions, Rasterizer};
-use koharu_renderer::{Frame, Renderer};
-use koharu_scene::{AssetRole, EntityId, Snapshot};
+use koharu_rasterizer::RasterOptions;
+use koharu_scene::{AssetRole, EntityId};
 use rayon::prelude::*;
 use serde::Deserialize;
 use specta::Type;
@@ -46,15 +47,14 @@ pub(crate) async fn export(
     project: State<'_, CurrentProject>,
     desktop: State<'_, Desktop>,
 ) -> std::result::Result<(), Error> {
-    let (name, snapshot) = {
+    let name = {
         let project = project.project.lock().await;
-        let project = project.as_ref().context("no project is open")?;
-        (project.name.clone(), project.snapshot())
+        project
+            .as_ref()
+            .context("no project is open")?
+            .name
+            .clone()
     };
-    let pages = snapshot.pages().map(|page| page.id()).collect::<Vec<_>>();
-    if pages.is_empty() {
-        return Err(anyhow::anyhow!("there are no pages to export").into());
-    }
     let dialog = rfd::AsyncFileDialog::new().set_parent(&window);
     let destination = match format {
         ExportFormat::Png | ExportFormat::Psd => dialog.pick_folder().await,
@@ -69,6 +69,38 @@ pub(crate) async fn export(
     let Some(destination) = destination.map(|destination| destination.path().to_owned()) else {
         return Ok(());
     };
+    export_to(destination, format, project, desktop).await
+}
+
+/// Export to a known destination. Agents use this instead of the file dialog.
+#[tauri::command]
+#[specta::specta]
+pub(crate) async fn export_to_path(
+    destination: PathBuf,
+    format: ExportFormat,
+    project: State<'_, CurrentProject>,
+    desktop: State<'_, Desktop>,
+) -> std::result::Result<(), Error> {
+    export_to(destination, format, project, desktop).await
+}
+
+async fn export_to(
+    destination: PathBuf,
+    format: ExportFormat,
+    project: State<'_, CurrentProject>,
+    desktop: State<'_, Desktop>,
+) -> std::result::Result<(), Error> {
+    let snapshot = {
+        let project = project.project.lock().await;
+        project
+            .as_ref()
+            .context("no project is open")?
+            .snapshot()
+    };
+    let pages = snapshot.pages().map(|page| page.id()).collect::<Vec<_>>();
+    if pages.is_empty() {
+        return Err(anyhow::anyhow!("there are no pages to export").into());
+    }
     let renderer = desktop.renderer();
     let rasterizer = desktop.rasterizer().await?;
     let frames = try_join_all(pages.iter().map(|&page| renderer.render(&snapshot, page))).await?;
@@ -186,36 +218,4 @@ pub(crate) async fn get_thumbnail(
     })
     .await?;
     Ok(ThumbnailBytes(bytes))
-}
-
-pub(crate) async fn rendered_preview(
-    renderer: &Renderer,
-    rasterizer: Arc<Rasterizer>,
-    snapshot: &Snapshot,
-    page: EntityId,
-) -> Result<Vec<u8>> {
-    snapshot.page(page)?;
-    let frame = renderer.render(snapshot, page).await?;
-    let image = rasterize(rasterizer, &frame, RasterOptions::default())
-        .await?
-        .image;
-    tokio_rayon::spawn(move || {
-        let image = image::DynamicImage::ImageRgba8(image)
-            .resize(1024, 1024, image::imageops::FilterType::Lanczos3)
-            .to_rgba8();
-        let encoder = webp::Encoder::from_rgba(image.as_raw(), image.width(), image.height());
-        Ok::<_, anyhow::Error>(encoder.encode(85.0).to_vec())
-    })
-    .await
-}
-
-async fn rasterize(
-    rasterizer: Arc<Rasterizer>,
-    frame: &Frame,
-    options: RasterOptions,
-) -> Result<Raster> {
-    let frame = frame.raster_frame()?;
-    tokio_rayon::spawn(move || rasterizer.rasterize(&frame, options))
-        .await
-        .map_err(Into::into)
 }

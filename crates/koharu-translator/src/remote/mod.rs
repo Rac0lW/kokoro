@@ -1,4 +1,5 @@
 mod caiyun;
+mod chat_completions;
 mod claude;
 mod deepl;
 mod deepseek;
@@ -9,6 +10,7 @@ mod lm_studio;
 mod minimax;
 mod openai;
 mod openai_compatible;
+mod opencode;
 mod openrouter;
 
 use anyhow::Context;
@@ -27,6 +29,7 @@ pub use lm_studio::LmStudioConfig;
 pub use minimax::MiniMaxConfig;
 pub use openai::OpenAiConfig;
 pub use openai_compatible::OpenAiCompatibleConfig;
+pub use opencode::OpenCodeConfig;
 pub use openrouter::OpenRouterConfig;
 
 use crate::{
@@ -80,6 +83,9 @@ pub(crate) async fn translate(
             openrouter::translate(client, &providers.openrouter, model()?, generation, request)
                 .await
         }
+        Provider::OpenCode => {
+            opencode::translate(client, &providers.opencode, model()?, generation, request).await
+        }
         Provider::LmStudio => {
             lm_studio::translate(client, &providers.lm_studio, model()?, generation, request).await
         }
@@ -102,6 +108,7 @@ pub(crate) async fn models(client: &Client, providers: &ProvidersConfig) -> Vec<
         minimax::models(client).boxed(),
         deepseek::models(client).boxed(),
         openai_compatible::models(client, &providers.openai_compatible).boxed(),
+        opencode::models(client, &providers.opencode).boxed(),
         openrouter::models(client).boxed(),
         lm_studio::models(client, &providers.lm_studio).boxed(),
         deepl::models().boxed(),

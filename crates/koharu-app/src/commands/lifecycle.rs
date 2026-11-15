@@ -11,7 +11,6 @@ use walkdir::WalkDir;
 
 use super::{
     ChannelExt as _, Error,
-    agent::AgentState,
     canvas::CanvasChannel,
     import,
     preferences::Preferences,
@@ -185,7 +184,6 @@ async fn replace_project(handle: &AppHandle<CefRuntime>, opened: Project) -> Res
     let page = opened.active_page();
     let info = opened.info();
 
-    handle.state::<AgentState>().reset().await;
     let processing = handle.state::<Processing>();
     for stop in processing.stops.lock().values() {
         stop.stop();
@@ -311,7 +309,6 @@ pub(crate) async fn delete_project(
 }
 
 async fn close_current_project(handle: &AppHandle<CefRuntime>) -> Result<()> {
-    handle.state::<AgentState>().reset().await;
     let processing = handle.state::<Processing>();
     for stop in processing.stops.lock().values() {
         stop.stop();

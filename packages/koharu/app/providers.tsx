@@ -2,6 +2,7 @@
 
 import { QueryClientProvider } from '@tanstack/react-query'
 import { Channel } from '@tauri-apps/api/core'
+import { listen } from '@tauri-apps/api/event'
 import { useEffect, useRef, type ReactNode } from 'react'
 import { I18nextProvider } from 'react-i18next'
 
@@ -30,8 +31,24 @@ import {
 import { Toaster } from '@koharu/ui/components/toast'
 import { TooltipProvider } from '@koharu/ui/components/tooltip'
 
+/** An external MCP client edited the project, so cached page data is stale. */
+function useExternalEdits() {
+  useEffect(() => {
+    let unlisten: (() => void) | undefined
+    void listen('kokoro://project-changed', () => {
+      void refresh(projectKey, pagesKey, pageKey)
+    })
+      .then((stop) => {
+        unlisten = stop
+      })
+      .catch(() => undefined)
+    return () => unlisten?.()
+  }, [])
+}
+
 export function Providers({ children }: { children: ReactNode }) {
   const runtime = useRef({ active: false, bound: false })
+  useExternalEdits()
 
   useEffect(() => {
     const lifecycle = runtime.current

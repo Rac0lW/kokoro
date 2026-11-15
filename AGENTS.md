@@ -80,7 +80,7 @@ Document only durable, repository-specific constraints here. Do not record curre
 - Add a test when it protects a real regression boundary. Do not lock a translated phrase, a language display name, a registration string, or a one-line behavior the owner can read directly. Do not add a second harness for behavior the crate's existing tests already cover. Do not assert a compatibility shim.
 - A UI change needs a screenshot of the affected state. If the bug is truncation, include a long-label case.
 - A model port needs a structured comparison on identical inputs. A green build is not that comparison.
-- A green check is not acceptance. Small bug fixes, documentation, translations, and tests can be opened directly. A new product feature, significant UI change, model or provider integration, platform integration, dependency, public API, schema change, or architectural refactor needs an issue discussion first.
+- A green check is not acceptance. Small bug fixes, documentation, translations, and tests can be landed directly. A new product feature, significant UI change, model or provider integration, platform integration, dependency, public API, schema change, or architectural refactor is landed once the direction is agreed with the maintainer; open an issue first only when the direction is still undecided.
 - Keep the pull-request text short: problem, change, and verification. A human reviews the whole diff and can explain every change. Do not submit an unreviewed autonomous patch.
 - Never add an AI assistant as a co-author of a git commit, such as through a `Co-Authored-By` trailer.
 

@@ -2,6 +2,8 @@
 
 mod app;
 mod commands;
+#[cfg(unix)]
+mod mcp;
 
 pub use app::run;
 pub use commands::bindings;

@@ -18,45 +18,10 @@
     "stop": "Durdur",
     "title": "Etkinlik"
   },
-  "agent": {
-    "account": "ChatGPT hesabı",
-    "applying": "Proje değişiklikleri uygulanıyor…",
-    "automatic": "Otomatik",
-    "cancel": "İptal",
-    "cancelled": "İptal edildi.",
-    "deviceCode": "Cihaz kodu",
-    "deviceCodeHint": "Tarayıcınız açıldı. Koharu uygulamasını yetkilendirmek için bu kodu girin.",
-    "emptyDescription": "Ajandan bu projeyi incelemesini, çevirmesini, düzenlemesini veya işlemesini isteyin. Sayfa görüntülerini yalnızca gerektiğinde görür.",
-    "emptyTitle": "Koharu ne yapsın?",
-    "failed": "Ajan isteği başarısız oldu.",
-    "loading": "Codex yükleniyor…",
-    "message": "Koharu Ajanına mesaj gönder",
-    "model": "Codex modeli",
-    "placeholder": "Koharu’dan bu proje üzerinde çalışmasını isteyin…",
-    "properties": "Özellikler",
-    "reasoning": "Akıl yürütme",
-    "reasoningLevels": {
-      "high": "Yüksek",
-      "low": "Düşük",
-      "max": "Maksimum",
-      "medium": "Orta",
-      "ultra": "Ultra",
-      "xhigh": "Çok yüksek"
-    },
-    "send": "Gönder",
-    "signIn": "Codex ile oturum aç",
-    "signInDescription": "ChatGPT aboneliğinizle oturum açın. Koharu cihaz kodu kimlik doğrulamasını kullanır ve hiçbir zaman API anahtarı istemez.",
-    "signInTitle": "Codex’e bağlan",
-    "signOut": "Oturumu kapat",
-    "signingIn": "Oturum açma bekleniyor…",
-    "thinking": "Düşünüyor…",
-    "title": "Ajan",
-    "working": "Çalışıyor…"
-  },
   "canvas": {
     "empty": "Başlamak için bir sayfa seçin.",
     "fit": "Pencereye Sığdır",
-    "surface": "Koharu tuvali",
+    "surface": "Kokoro tuvali",
     "unavailable": "WebGPU tuvali kullanılamıyor"
   },
   "colorPicker": {
@@ -73,7 +38,7 @@
     "reset": "Sıfırla"
   },
   "errors": {
-    "fatalTitle": "Koharu devam edemedi",
+    "fatalTitle": "Kokoro devam edemedi",
     "tryAgain": "Tekrar dene"
   },
   "fontPicker": {
@@ -456,10 +421,10 @@
       "addFamily": "Yazı tipi ailesi ekle",
       "defaultFamilies": "Varsayılan yazı tipi aileleri",
       "description": "Bir metin katmanına aile atanmadığında kullanılacak sıralı yazı tipi yığınını ayarlayın.",
-      "empty": "Varsayılan aile yok. Koharu sistem yedeğini kullanacak.",
+      "empty": "Varsayılan aile yok. Kokoro sistem yedeğini kullanacak.",
       "familyLabel": "Varsayılan yazı tipi ailesi {{index}}",
       "fontFallback": "Yedek yazı tipleri",
-      "fontFallbackDescription": "Koharu, metni destekleyen ilk kullanılabilir aileyi kullanır.",
+      "fontFallbackDescription": "Kokoro, metni destekleyen ilk kullanılabilir aileyi kullanır.",
       "loadError": "Yazı tipleri yüklenemedi. Mevcut aileler yine de kaldırılabilir.",
       "loadingFonts": "Yazı tipleri yükleniyor…",
       "removeFamily": "{{family}} ailesini kaldır",
@@ -479,7 +444,7 @@
     "loadingProjects": "Projeler yükleniyor…",
     "newDescription": "Sayfalarınız, çevirileriniz ve dışa aktarımlarınız için temiz bir çalışma alanı oluşturun.",
     "newProject": "Yeni proje",
-    "projectKind": "Koharu projesi",
+    "projectKind": "Kokoro projesi",
     "projectList": "Projeler",
     "projectName": "Proje adı",
     "projectNamePlaceholder": "Yeni projem",
@@ -489,9 +454,9 @@
   },
   "startup": {
     "description": "Yerel yapay zekâ çalışma zamanları yükleniyor ve çalışma alanı hazırlanıyor. İlk açılış biraz sürebilir.",
-    "opening": "Koharu açılıyor…",
+    "opening": "Kokoro açılıyor…",
     "status": "Yerel çalışma zamanları başlatılıyor",
-    "title": "Koharu hazırlanıyor"
+    "title": "Kokoro hazırlanıyor"
   },
   "status": {
     "zoom": "Yakınlaştırma"
@@ -513,12 +478,12 @@
   },
   "updater": {
     "available": {
-      "description": "Koharu <strong>{{version}}</strong> yüklenmeye hazır",
+      "description": "Kokoro <strong>{{version}}</strong> yüklenmeye hazır",
       "title": "Güncelleme mevcut"
     },
     "close": "Kapat",
     "downloading": {
-      "subtitle": "Koharu {{version}}",
+      "subtitle": "Kokoro {{version}}",
       "title": "Güncelleme indiriliyor…"
     },
     "error": {

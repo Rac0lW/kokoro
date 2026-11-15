@@ -8,7 +8,7 @@ use crate::{
     remote::{
         CaiyunConfig, ClaudeConfig, DeepLConfig, DeepSeekConfig, GeminiConfig, GoogleCloudConfig,
         GrokConfig, LmStudioConfig, MiniMaxConfig, OpenAiCompatibleConfig, OpenAiConfig,
-        OpenRouterConfig,
+        OpenCodeConfig, OpenRouterConfig,
     },
 };
 
@@ -162,6 +162,12 @@ define_providers! {
         name: "OpenAI-compatible",
         field: openai_compatible,
         config: OpenAiCompatibleConfig,
+    }
+    OpenCode {
+        id: "opencode",
+        name: "OpenCode",
+        field: opencode,
+        config: OpenCodeConfig,
     }
     OpenRouter {
         id: "openrouter",

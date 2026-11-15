@@ -159,6 +159,35 @@ fn translation_system_prompt(request: &TranslationRequest) -> String {
         "}.trim_end());
     }
 
+    if !request.glossary.is_empty() {
+        // A term whose target equals its source is a name that must survive
+        // untranslated, such as an author's name.
+        let (kept, translated): (Vec<_>, Vec<_>) = request
+            .glossary
+            .iter()
+            .filter(|term| !term.source.trim().is_empty())
+            .partition(|term| term.source.trim() == term.target.trim());
+
+        prompt.push_str("\n\nTerminology requirements:\n");
+        if !kept.is_empty() {
+            prompt.push_str(
+                "These are proper names. Keep every occurrence exactly as written in the source; do not translate, transliterate, or romanize them:\n",
+            );
+            for term in kept {
+                prompt.push_str(&format!("- {}\n", term.source));
+            }
+        }
+        if !translated.is_empty() {
+            prompt.push_str(
+                "Every occurrence of a listed term must be rendered exactly as given, in {target}:\n",
+            );
+            for term in translated {
+                prompt.push_str(&format!("- {} => {}\n", term.source, term.target));
+            }
+        }
+        prompt.push_str("Leave terms that do not appear untouched.");
+    }
+
     if let Some(instructions) = request
         .instructions
         .as_deref()
@@ -328,6 +357,48 @@ mod tests {
         assert_eq!(input["context"][0]["translation"], "previous");
         assert_eq!(input["segments"][0]["id"], 0);
         assert_eq!(input["segments"][0]["text"], "new");
+    }
+
+    #[test]
+    fn system_prompt_renders_the_glossary() {
+        let request = TranslationRequest::new(["なもり"], Language::ChineseSimplified).with_glossary([
+            crate::Term {
+                source: "なもり".to_owned(),
+                target: "那莫里".to_owned(),
+            },
+        ]);
+        let (system, _) = prompts(&request).unwrap();
+
+        assert!(system.contains("Terminology requirements"));
+        assert!(system.contains("なもり => 那莫里"));
+    }
+
+    #[test]
+    fn system_prompt_keeps_an_identity_term_untranslated() {
+        let request = TranslationRequest::new(["なもり"], Language::ChineseSimplified).with_glossary([
+            crate::Term {
+                source: "なもり".to_owned(),
+                target: "なもり".to_owned(),
+            },
+            crate::Term {
+                source: "第二十二巻".to_owned(),
+                target: "第22卷".to_owned(),
+            },
+        ]);
+        let (system, _) = prompts(&request).unwrap();
+
+        assert!(system.contains("Keep every occurrence exactly as written"));
+        assert!(system.contains("- なもり"));
+        assert!(!system.contains("なもり => なもり"));
+        assert!(system.contains("第二十二巻 => 第22卷"));
+    }
+
+    #[test]
+    fn system_prompt_omits_the_glossary_section_when_empty() {
+        let request = TranslationRequest::new(["hello"], Language::English);
+        let (system, _) = prompts(&request).unwrap();
+
+        assert!(!system.contains("Terminology requirements"));
     }
 
     #[test]

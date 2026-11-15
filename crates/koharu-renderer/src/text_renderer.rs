@@ -486,7 +486,7 @@ mod tests {
         let font = FontSystem::new().first_font().unwrap();
         let layout = TextLayout::new(&font)
             .with_font_size(24.0)
-            .run("Koharu")
+            .run("Kokoro")
             .unwrap();
         let mut scene = PreparedScene::default();
         let mut resources = Vec::new();

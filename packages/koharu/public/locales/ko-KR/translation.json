@@ -18,45 +18,10 @@
     "stop": "중지",
     "title": "활동"
   },
-  "agent": {
-    "account": "ChatGPT 계정",
-    "applying": "프로젝트 변경 사항 적용 중…",
-    "automatic": "자동",
-    "cancel": "취소",
-    "cancelled": "취소되었습니다.",
-    "deviceCode": "기기 코드",
-    "deviceCodeHint": "브라우저가 열렸습니다. 이 코드를 입력해 Koharu를 승인하세요.",
-    "emptyDescription": "에이전트에게 이 프로젝트의 검사, 번역, 편집 또는 처리를 요청하세요. 페이지 이미지는 필요할 때만 확인합니다.",
-    "emptyTitle": "Koharu에게 무엇을 시킬까요?",
-    "failed": "에이전트 요청에 실패했습니다.",
-    "loading": "Codex 불러오는 중…",
-    "message": "Koharu 에이전트에게 메시지 보내기",
-    "model": "Codex 모델",
-    "placeholder": "Koharu에게 이 프로젝트 작업 요청…",
-    "properties": "속성",
-    "reasoning": "추론",
-    "reasoningLevels": {
-      "high": "높음",
-      "low": "낮음",
-      "max": "최대",
-      "medium": "중간",
-      "ultra": "울트라",
-      "xhigh": "매우 높음"
-    },
-    "send": "보내기",
-    "signIn": "Codex로 로그인",
-    "signInDescription": "ChatGPT 구독으로 로그인하세요. Koharu는 기기 코드 인증을 사용하며 API 키를 요구하지 않습니다.",
-    "signInTitle": "Codex 연결",
-    "signOut": "로그아웃",
-    "signingIn": "로그인 대기 중…",
-    "thinking": "생각 중…",
-    "title": "에이전트",
-    "working": "작업 중…"
-  },
   "canvas": {
     "empty": "시작할 페이지를 선택하세요.",
     "fit": "창에 맞춤",
-    "surface": "Koharu 캔버스",
+    "surface": "Kokoro 캔버스",
     "unavailable": "WebGPU 캔버스를 사용할 수 없습니다"
   },
   "colorPicker": {
@@ -479,7 +444,7 @@
     "loadingProjects": "프로젝트 불러오는 중…",
     "newDescription": "페이지, 번역 및 내보내기를 위한 새 작업 공간을 만드세요.",
     "newProject": "새 프로젝트",
-    "projectKind": "Koharu 프로젝트",
+    "projectKind": "Kokoro 프로젝트",
     "projectList": "프로젝트",
     "projectName": "프로젝트 이름",
     "projectNamePlaceholder": "새 프로젝트",
@@ -489,9 +454,9 @@
   },
   "startup": {
     "description": "로컬 AI 런타임을 불러오고 작업 공간을 준비하고 있습니다. 처음 실행할 때는 잠시 걸릴 수 있습니다.",
-    "opening": "Koharu 여는 중…",
+    "opening": "Kokoro 여는 중…",
     "status": "로컬 런타임 초기화 중",
-    "title": "Koharu 준비 중"
+    "title": "Kokoro 준비 중"
   },
   "status": {
     "zoom": "확대/축소"

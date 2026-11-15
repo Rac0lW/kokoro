@@ -11,10 +11,13 @@
         "minWidth": 900,
         "minHeight": 600,
         "center": true,
-        "title": "Koharu",
+        "title": "Kokoro",
         "decorations": true,
         "titleBarStyle": "Overlay",
-        "trafficLightPosition": { "x": 16, "y": 23 },
+        "trafficLightPosition": {
+          "x": 16,
+          "y": 23
+        },
         "hiddenTitle": true,
         "transparent": false,
         "visible": false

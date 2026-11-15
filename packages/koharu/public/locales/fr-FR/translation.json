@@ -18,45 +18,10 @@
     "stop": "Arrêter",
     "title": "Activité"
   },
-  "agent": {
-    "account": "Compte ChatGPT",
-    "applying": "Application des modifications au projet…",
-    "automatic": "Automatique",
-    "cancel": "Annuler",
-    "cancelled": "Annulé.",
-    "deviceCode": "Code de l’appareil",
-    "deviceCodeHint": "Votre navigateur s’est ouvert. Saisissez ce code pour autoriser Koharu.",
-    "emptyDescription": "Demandez à l’agent d’analyser, de traduire, de modifier ou de traiter ce projet. Il ne consultera les images des pages qu’en cas de besoin.",
-    "emptyTitle": "Que doit faire Koharu ?",
-    "failed": "La requête de l’agent a échoué.",
-    "loading": "Chargement de Codex…",
-    "message": "Message à l’agent Koharu",
-    "model": "Modèle Codex",
-    "placeholder": "Demandez à Koharu de travailler sur ce projet…",
-    "properties": "Propriétés",
-    "reasoning": "Raisonnement",
-    "reasoningLevels": {
-      "high": "Élevé",
-      "low": "Faible",
-      "max": "Max",
-      "medium": "Moyen",
-      "ultra": "Ultra",
-      "xhigh": "Très élevé"
-    },
-    "send": "Envoyer",
-    "signIn": "Se connecter avec Codex",
-    "signInDescription": "Connectez-vous avec votre abonnement ChatGPT. Koharu utilise l’authentification par code d’appareil et ne demande jamais de clé API.",
-    "signInTitle": "Connecter Codex",
-    "signOut": "Se déconnecter",
-    "signingIn": "En attente de connexion…",
-    "thinking": "Réflexion…",
-    "title": "Agent",
-    "working": "Travail en cours…"
-  },
   "canvas": {
     "empty": "Sélectionnez une page pour commencer.",
     "fit": "Ajuster à la fenêtre",
-    "surface": "Canevas Koharu",
+    "surface": "Canevas Kokoro",
     "unavailable": "Canevas WebGPU indisponible"
   },
   "colorPicker": {
@@ -73,7 +38,7 @@
     "reset": "Réinitialiser"
   },
   "errors": {
-    "fatalTitle": "Koharu ne peut pas continuer",
+    "fatalTitle": "Kokoro ne peut pas continuer",
     "tryAgain": "Réessayer"
   },
   "fontPicker": {
@@ -456,10 +421,10 @@
       "addFamily": "Ajouter une famille de polices",
       "defaultFamilies": "Familles de polices par défaut",
       "description": "Définissez la liste ordonnée de polices utilisée lorsqu’aucune famille n’est attribuée à un calque de texte.",
-      "empty": "Aucune famille par défaut. Koharu utilisera la police de secours du système.",
+      "empty": "Aucune famille par défaut. Kokoro utilisera la police de secours du système.",
       "familyLabel": "Famille de polices par défaut {{index}}",
       "fontFallback": "Police de secours",
-      "fontFallbackDescription": "Koharu utilise la première famille disponible qui prend en charge le texte.",
+      "fontFallbackDescription": "Kokoro utilise la première famille disponible qui prend en charge le texte.",
       "loadError": "Impossible de charger les polices. Les familles existantes peuvent toujours être supprimées.",
       "loadingFonts": "Chargement des polices…",
       "removeFamily": "Retirer {{family}}",
@@ -479,7 +444,7 @@
     "loadingProjects": "Chargement des projets…",
     "newDescription": "Créez un espace de travail vierge pour vos pages, traductions et exports.",
     "newProject": "Nouveau projet",
-    "projectKind": "Projet Koharu",
+    "projectKind": "Projet Kokoro",
     "projectList": "Projets",
     "projectName": "Nom du projet",
     "projectNamePlaceholder": "Mon nouveau projet",
@@ -489,9 +454,9 @@
   },
   "startup": {
     "description": "Chargement des environnements d’IA locaux et préparation de l’espace de travail. Le premier lancement peut prendre un moment.",
-    "opening": "Ouverture de Koharu…",
+    "opening": "Ouverture de Kokoro…",
     "status": "Initialisation des environnements locaux",
-    "title": "Préparation de Koharu"
+    "title": "Préparation de Kokoro"
   },
   "status": {
     "zoom": "Zoom"
@@ -513,12 +478,12 @@
   },
   "updater": {
     "available": {
-      "description": "Koharu <strong>{{version}}</strong> est prêt à être installé",
+      "description": "Kokoro <strong>{{version}}</strong> est prêt à être installé",
       "title": "Mise à jour disponible"
     },
     "close": "Fermer",
     "downloading": {
-      "subtitle": "Koharu {{version}}",
+      "subtitle": "Kokoro {{version}}",
       "title": "Téléchargement de la mise à jour…"
     },
     "error": {

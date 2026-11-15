@@ -1,35 +1,37 @@
-<h1 align="center">Koharu</h1>
+<h1 align="center">Kokoro</h1>
 
 <p align="center">ML-powered manga translator, written in <b>Rust</b>.</p>
 
-<p align="center">
-<a href="https://github.com/koharu-rs/koharu/releases/latest" target="_blank"><img alt="GitHub Downloads (all assets, all releases)" src="https://img.shields.io/github/downloads/koharu-rs/koharu/total?style=for-the-badge&link=https%3A%2F%2Fgithub.com%2Fkoharu-rs%2Fkoharu%2Freleases%2Flatest"></a>
-</p>
+<p align="center">A personal fork of <a href="https://github.com/koharu-rs/koharu" target="_blank">Koharu</a>.</p>
 
 <p align="center">
-<a href="https://trendshift.io/repositories/20649" target="_blank"><img src="https://trendshift.io/api/badge/repositories/20649" alt="koharu-rs%2Fkoharu | Trendshift" style="width: 250px; height: 55px;" width="250" height="55"/></a>
-</p>
-
-<p align="center">
-<a href="https://koharu.rs/installation" target="_blank">Getting Started</a> · <a href="https://koharu.rs/" target="_blank">Docs</a> · <a href="https://github.com/koharu-rs/koharu/issues" target="_blank">Bug reports</a> · <a href="https://discord.gg/mHvHkxGnUY" target="_blank">Discord</a>
+<a href="https://koharu.rs/installation" target="_blank">Getting Started</a> · <a href="https://koharu.rs/" target="_blank">Docs</a> · <a href="https://github.com/Rac0lW/koharu/issues" target="_blank">Bug reports</a>
 </p>
 
 <p align="center">
 <a href="https://koharu.rs/ja" target="_blank">日本語</a> | <a href="https://koharu.rs/zh" target="_blank">简体中文</a>
 </p>
 
-Koharu introduces a local-first workflow for manga translation, utilizing the power of ML to automate the process. It combines the capabilities of object detection, OCR, inpainting, and LLMs to create a seamless translation experience.
+Kokoro is a local-first manga translation workflow built on Koharu: object detection, OCR, inpainting, and LLMs run in one application. Everything upstream ships is still here — this fork adds a few things on top.
 
 > [!NOTE]
-> Koharu runs its vision models and LLMs **locally** on your machine to keep your data private and secure.
+> Kokoro runs its vision models and LLMs **locally** on your machine to keep your data private and secure.
 
 ---
 
 ![screenshot](packages/docs/screenshot.png)
 
-> [!NOTE]
-> Join our [Discord server](https://discord.gg/mHvHkxGnUY) for support and discussion.
+## What this fork changes
 
+- **OpenCode Console as a translation provider.** Paste a Console API key (`oc_sk_…`) in *Settings → Providers → OpenCode* and any paid or Go model becomes available next to the other providers. The pay-as-you-go gateway is the default; point `base_url` at `https://opencode.ai/inference/go/openai/v1` for a Go subscription.
+- **Free-tier models are hidden.** Console serves its free tier only inside OpenCode itself and answers `403` everywhere else, so entries priced at zero are filtered out of the model picker instead of failing at translation time.
+- **The model catalog never uses your stored key.** Console publishes its catalog anonymously but rejects a request that carries an invalid key, so listing models cannot fail because a credential went stale.
+- **No keychain prompt on startup.** Codex credentials are read when the agent panel opens, not when the application launches, so macOS stops asking for keychain access before you have done anything.
+- **Signed local builds.** `scripts/build-bundle.sh` builds the bundle with your own Apple Development identity, which keeps the keychain ACL stable across rebuilds.
+
+Everything else — models, pipeline stages, canvas, typesetting, PSD export, agent tooling — tracks upstream Koharu.
+
+---
 ## Features
 
 - [Multi-format project management](https://koharu.rs/guides/projects) for raster images, archives, PDFs, and EPUBs with page sequencing
@@ -43,6 +45,20 @@ Koharu introduces a local-first workflow for manga translation, utilizing the po
 - [Multilingual text shaping and layout](https://koharu.rs/guides/typesetting) with automatic fitting, font fallback, vertical CJK, and right-to-left text
 - [Layered PSD export](https://koharu.rs/guides/export) for flattened delivery and layered editing
 - [Agent-based workflow](https://koharu.rs/agent/projects) for project inspection, editing, and pipeline control
+
+## Agent access over MCP
+
+Kokoro serves its own MCP endpoint on a loopback Unix socket (`~/.koharu/mcp.sock`). `kokoro-mcp` carries those messages over stdio, so any MCP client can drive a running Kokoro:
+
+```bash
+cargo build -p kokoro-mcp
+cp target/debug/kokoro-mcp ~/.local/bin/
+pi mcp add kokoro -- ~/.local/bin/kokoro-mcp   # or the same command in any client's stdio config
+```
+
+Tools: `list_projects`, `open_project`, `close_project`, `get_pages`, `get_page`, `set_translation`, `set_source_text`, `process`, `undo`, `redo`.
+
+A tool call commits through the same path as the editor, so one call is one undo step. Point `KOKORO_MCP_SOCKET` at another path to talk to a second instance.
 
 ## Hardware Acceleration
 
@@ -126,7 +142,7 @@ Translation can use a local language model or a remote API.
 
 #### Cloud Providers
 
-Hosted LLM providers: [OpenAI](https://platform.openai.com/), [Gemini](https://ai.google.dev/), [Claude](https://www.anthropic.com/api), [Grok](https://docs.x.ai/developers), [MiniMax](https://platform.minimax.io/), [DeepSeek](https://platform.deepseek.com/), and [OpenRouter](https://openrouter.ai/).
+Hosted LLM providers: [OpenAI](https://platform.openai.com/), [Gemini](https://ai.google.dev/), [Claude](https://www.anthropic.com/api), [Grok](https://docs.x.ai/developers), [MiniMax](https://platform.minimax.io/), [DeepSeek](https://platform.deepseek.com/), [OpenCode](https://opencode.ai/docs/console/harnesses), and [OpenRouter](https://openrouter.ai/).
 
 #### Machine Translation Providers
 
@@ -138,9 +154,17 @@ OpenAI-compatible endpoints are also supported.
 
 ## Installation
 
-Download release builds from the [releases page](https://github.com/koharu-rs/koharu/releases/latest). [Installation requirements and first launch](https://koharu.rs/installation) vary by operating system.
+### From this fork
 
-Builds are available for Windows, macOS, and Linux.
+Every tagged release is built by [`.github/workflows/kokoro-release.yml`](.github/workflows/kokoro-release.yml) and attached to the release as `Kokoro-macos-arm64.zip`. The build is **not** signed with a Developer ID and not notarized, so macOS quarantines the download. After unzipping and dragging `Kokoro.app` into `/Applications`, clear the quarantine flag once:
+
+```bash
+xattr -dr com.apple.quarantine /Applications/Kokoro.app
+```
+
+### Upstream releases
+
+Upstream Koharu publishes signed builds for Windows, macOS, and Linux on the [Koharu releases page](https://github.com/koharu-rs/koharu/releases/latest). [Installation requirements and first launch](https://koharu.rs/installation) vary by operating system.
 
 ### WinGet
 
@@ -198,6 +222,15 @@ bun run build
 ```
 
 The executable is written to `target/release`.
+
+For a launchable, signed `.app` instead of a bare executable:
+
+```bash
+./scripts/build-bundle.sh            # release bundle
+./scripts/build-bundle.sh --debug    # debug bundle
+```
+
+The bundle is written to `target/<profile>/bundle/macos/Kokoro.app` and revealed in Finder. The script signs with the first `Developer ID Application` or `Apple Development` identity in your keychain; pass `--no-sign` to skip signing.
 
 ## Sponsorship
 

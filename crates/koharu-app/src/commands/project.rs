@@ -184,7 +184,7 @@ impl ProjectLibrary {
     pub(crate) fn new() -> Result<Self> {
         let root = dirs::document_dir()
             .context("the Documents directory is unavailable")?
-            .join("Koharu");
+            .join("Kokoro");
         std::fs::create_dir_all(&root)
             .with_context(|| format!("failed to create {}", root.display()))?;
         Ok(Self { root })
@@ -521,6 +521,90 @@ impl Project {
             }
         })?;
         self.commit(patch).await
+    }
+
+    /// Replace many translations in one patch, so a bulk edit is one undo step.
+    pub(crate) async fn set_translations(
+        &mut self,
+        updates: impl IntoIterator<Item = (EntityId, Option<String>)>,
+    ) -> Result<Commit> {
+        let snapshot = self.snapshot();
+        let updates = updates
+            .into_iter()
+            .map(|(layer, text)| {
+                let content = Self::text_content(&snapshot, layer)?;
+                let language = snapshot
+                    .component::<SceneTranslation>(content)?
+                    .and_then(|translation| translation.language);
+                Ok((layer, content, language, text))
+            })
+            .collect::<Result<Vec<_>>>()?;
+        let patch = snapshot.patch(|edit| {
+            for (layer, content, language, text) in updates {
+                edit.promote_entity_to_user(layer)?;
+                edit.promote_entity_to_user(content)?;
+                match text {
+                    Some(text) => edit.set(
+                        content,
+                        &SceneTranslation {
+                            text: Authored::user(text),
+                            language,
+                        },
+                    ),
+                    None => edit.remove::<SceneTranslation>(content),
+                }?;
+            }
+            Ok(())
+        })?;
+        self.commit(patch).await
+    }
+
+    /// Rewrite existing translations through the glossary, in one patch.
+    ///
+    /// Longer source terms win, so a term that contains another one is not cut
+    /// short by the shorter replacement.
+    pub(crate) async fn apply_glossary(
+        &mut self,
+        terms: &[koharu_translator::Term],
+    ) -> Result<Option<(Commit, usize)>> {
+        let mut terms = terms
+            .iter()
+            .filter(|term| !term.source.trim().is_empty() && !term.target.trim().is_empty())
+            .collect::<Vec<_>>();
+        terms.sort_by_key(|term| std::cmp::Reverse(term.source.chars().count()));
+        if terms.is_empty() {
+            return Ok(None);
+        }
+
+        let snapshot = self.snapshot();
+        let mut updates = Vec::new();
+        for page in snapshot.pages() {
+            let page = snapshot.page(page.id())?;
+            let Some(group) = page.text_group()? else {
+                continue;
+            };
+            for layer in group.text_layers()? {
+                let content = layer.content()?;
+                let Some(translation) = content.translation()? else {
+                    continue;
+                };
+                let current = translation.text.value;
+                let mut next = current.clone();
+                for term in &terms {
+                    next = next.replace(term.source.as_str(), &term.target);
+                }
+                if next != current {
+                    // The translation edit targets the layer, not its content.
+                    updates.push((layer.id(), Some(next)));
+                }
+            }
+        }
+        let changed = updates.len();
+        if changed == 0 {
+            return Ok(None);
+        }
+        let commit = self.set_translations(updates).await?;
+        Ok(Some((commit, changed)))
     }
 
     pub(crate) async fn set_typography(

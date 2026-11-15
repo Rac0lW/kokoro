@@ -1,7 +1,7 @@
 use anyhow::Result;
 use async_trait::async_trait;
 use koharu_scene::{Authored, LanguageTag, Origin, SourceText, Translation};
-use koharu_translator::{TranslationRequest, Translator};
+use koharu_translator::{Glossary, TranslationRequest, Translator};
 
 use crate::TranslationConfig;
 
@@ -56,6 +56,11 @@ impl StageProcessor for Processor {
         );
         if let Some(instructions) = self.config.instructions.as_deref() {
             request = request.with_instructions(instructions);
+        }
+        let glossary = Glossary::load()?;
+        let glossary = glossary.read()?.entries.clone();
+        if !glossary.is_empty() {
+            request = request.with_glossary(glossary);
         }
         if Translator::supports_vision(&self.config.model, &self.config.generation)
             && let Some(image) = input.images.get(&input.scene, input.page, "source").await?

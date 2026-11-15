@@ -1,0 +1,13 @@
+[package]
+name = "kokoro-mcp"
+version.workspace = true
+edition.workspace = true
+description = "stdio MCP transport for a running Kokoro."
+license.workspace = true
+authors.workspace = true
+publish = false
+
+[dependencies]
+anyhow = { workspace = true }
+dirs = { workspace = true }
+tokio = { workspace = true }

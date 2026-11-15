@@ -1,0 +1,83 @@
+name: Kokoro Release
+
+# Builds a downloadable macOS package without any Apple developer secrets: the
+# bundle is ad-hoc signed, so downloads need one `xattr` call (see README).
+on:
+  workflow_dispatch:
+  push:
+    tags:
+      - '*'
+
+permissions:
+  contents: write
+
+env:
+  CARGO_TERM_COLOR: always
+
+jobs:
+  macos:
+    name: macOS (arm64)
+    runs-on: macos-latest
+    timeout-minutes: 350
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+
+      - uses: oven-sh/setup-bun@v2
+
+      - uses: Swatinem/rust-cache@v2
+        with:
+          shared-key: kokoro-macos-release
+          save-if: false
+
+      - name: Install macOS CEF helper targets
+        run: rustup target add aarch64-apple-darwin x86_64-apple-darwin
+
+      - uses: actions/cache@v6
+        with:
+          path: ~/.bun/install/cache
+          key: macos-bun-${{ hashFiles('**/bun.lock') }}
+
+      - name: Install dependencies
+        run: bun install
+
+      - name: Stage the MCP transport
+        run: |
+          cargo build -p kokoro-mcp --release
+          triple=$(rustc -vV | sed -n 's/^host: //p')
+          mkdir -p crates/koharu/binaries
+          cp "target/release/kokoro-mcp" "crates/koharu/binaries/kokoro-mcp-$triple"
+
+      # No APPLE_SIGNING_IDENTITY and no notarization credentials on purpose:
+      # the bundler falls back to an ad-hoc signature.
+      - name: Build the app bundle
+        working-directory: crates/koharu
+        run: |
+          cargo tauri build --bundles app \
+            --config '{"bundle":{"createUpdaterArtifacts":false}}'
+
+      - name: Package
+        run: |
+          ditto -c -k --keepParent \
+            target/release/bundle/macos/Kokoro.app \
+            Kokoro-macos-arm64.zip
+          shasum -a 256 Kokoro-macos-arm64.zip \
+            | tee Kokoro-macos-arm64.zip.sha256
+
+      - uses: actions/upload-artifact@v7
+        with:
+          name: Kokoro-macos-arm64
+          path: |
+            Kokoro-macos-arm64.zip
+            Kokoro-macos-arm64.zip.sha256
+          retention-days: 30
+
+      - name: Attach to the release
+        if: github.ref_type == 'tag'
+        uses: softprops/action-gh-release@v2
+        with:
+          files: |
+            Kokoro-macos-arm64.zip
+            Kokoro-macos-arm64.zip.sha256
+          generate_release_notes: true

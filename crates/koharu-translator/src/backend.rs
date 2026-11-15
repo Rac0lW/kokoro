@@ -18,6 +18,8 @@ pub struct TranslationRequest {
     pub instructions: Option<String>,
     pub context: Vec<TranslationContext>,
     pub image: Option<Arc<DynamicImage>>,
+    /// Terms this request must render exactly as given.
+    pub glossary: Vec<crate::Term>,
 }
 
 impl TranslationRequest {
@@ -33,6 +35,7 @@ impl TranslationRequest {
             instructions: None,
             context: Vec::new(),
             image: None,
+            glossary: Vec::new(),
         }
     }
 
@@ -46,6 +49,12 @@ impl TranslationRequest {
     #[must_use]
     pub fn with_instructions(mut self, instructions: impl Into<String>) -> Self {
         self.instructions = Some(instructions.into());
+        self
+    }
+
+    #[must_use]
+    pub fn with_glossary(mut self, glossary: impl IntoIterator<Item = crate::Term>) -> Self {
+        self.glossary = glossary.into_iter().collect();
         self
     }
 

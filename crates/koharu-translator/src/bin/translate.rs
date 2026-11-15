@@ -11,7 +11,7 @@ use koharu_translator::{
 use url::Url;
 
 #[derive(Debug, Parser)]
-#[command(about = "Run Koharu's configured translator")]
+#[command(about = "Run Kokoro's configured translator")]
 struct Args {
     #[arg(long)]
     provider: String,
@@ -115,6 +115,7 @@ fn prepare_secret(args: &Args, provider: Provider) -> Result<()> {
         Provider::MiniMax => Some(("MINIMAX_API_KEY", true)),
         Provider::DeepSeek => Some(("DEEPSEEK_API_KEY", true)),
         Provider::OpenAiCompatible => Some(("OPENAI_COMPATIBLE_API_KEY", false)),
+        Provider::OpenCode => Some(("OPENCODE_API_KEY", true)),
         Provider::OpenRouter => Some(("OPENROUTER_API_KEY", true)),
         Provider::LmStudio => Some(("LM_STUDIO_API_TOKEN", false)),
         Provider::DeepL => Some(("DEEPL_API_KEY", true)),

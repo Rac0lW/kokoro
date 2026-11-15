@@ -3,15 +3,17 @@ use tauri::{AppHandle, Manager as _, WindowEvent};
 use tauri_runtime_cef::{Cef, CefRuntime};
 use tokio::sync::Mutex;
 
-use crate::commands::{
-    agent::AgentState,
-    canvas::CanvasChannel,
-    lifecycle::{
-        Download, DownloadChannel, DownloadState, Initialization, ModelResources, ProjectChannel,
-        ResourceChannel,
+use crate::{
+    commands::{
+        canvas::CanvasChannel,
+        lifecycle::{
+            Download, DownloadChannel, DownloadState, Initialization, ModelResources,
+            ProjectChannel, ResourceChannel,
+        },
+        processing::{JobChannel, Processing},
+        project::{CurrentProject, ProjectLibrary},
     },
-    processing::{JobChannel, Processing},
-    project::{CurrentProject, ProjectLibrary},
+    mcp,
 };
 
 pub(crate) async fn initialize(handle: AppHandle<CefRuntime>) -> Result<()> {
@@ -107,7 +109,7 @@ pub fn run(context: tauri::Context<CefRuntime>) -> Result<()> {
                 application
                     .path()
                     .resource_dir()
-                    .context("failed to locate Koharu's installation directory")?
+                    .context("failed to locate Kokoro's installation directory")?
                     .join("store"),
             )?;
 
@@ -125,7 +127,8 @@ pub fn run(context: tauri::Context<CefRuntime>) -> Result<()> {
 
             let handle = application.handle().clone();
             application.manage(koharu_desktop::Desktop::new()?);
-            application.manage(AgentState::new(handle.clone())?);
+            #[cfg(unix)]
+            mcp::serve(handle.clone());
 
             let window_config = application
                 .config()
@@ -225,7 +228,6 @@ pub fn run(context: tauri::Context<CefRuntime>) -> Result<()> {
                 }
                 processing.stops.lock().clear();
                 processing.jobs.lock().clear();
-                window.state::<AgentState>().cancel_all();
             }
         })
         .run(context)?;

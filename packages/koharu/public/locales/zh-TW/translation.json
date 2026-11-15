@@ -18,45 +18,10 @@
     "stop": "停止",
     "title": "活動"
   },
-  "agent": {
-    "account": "ChatGPT 帳戶",
-    "applying": "正在套用專案變更…",
-    "automatic": "自動",
-    "cancel": "取消",
-    "cancelled": "已取消。",
-    "deviceCode": "裝置代碼",
-    "deviceCodeHint": "瀏覽器已開啟。輸入此代碼以授權 Koharu。",
-    "emptyDescription": "讓代理檢查、翻譯、編輯或處理此專案。它只會在需要時查看頁面影像。",
-    "emptyTitle": "要讓 Koharu 做什麼？",
-    "failed": "代理要求失敗。",
-    "loading": "正在載入 Codex…",
-    "message": "傳送訊息給 Koharu 代理",
-    "model": "Codex 模型",
-    "placeholder": "讓 Koharu 處理此專案…",
-    "properties": "屬性",
-    "reasoning": "推理",
-    "reasoningLevels": {
-      "high": "高",
-      "low": "低",
-      "max": "最大",
-      "medium": "中",
-      "ultra": "超強",
-      "xhigh": "超高"
-    },
-    "send": "傳送",
-    "signIn": "使用 Codex 登入",
-    "signInDescription": "使用你的 ChatGPT 訂閱登入。Koharu 使用裝置代碼驗證，絕不會要求提供 API 金鑰。",
-    "signInTitle": "連線 Codex",
-    "signOut": "登出",
-    "signingIn": "正在等待登入…",
-    "thinking": "正在思考…",
-    "title": "代理",
-    "working": "正在工作…"
-  },
   "canvas": {
     "empty": "請選擇頁面以開始。",
     "fit": "適應視窗",
-    "surface": "Koharu 畫布",
+    "surface": "Kokoro 畫布",
     "unavailable": "WebGPU 畫布無法使用"
   },
   "colorPicker": {
@@ -73,7 +38,7 @@
     "reset": "重設"
   },
   "errors": {
-    "fatalTitle": "Koharu 無法繼續執行",
+    "fatalTitle": "Kokoro 無法繼續執行",
     "tryAgain": "再試一次"
   },
   "fontPicker": {
@@ -456,10 +421,10 @@
       "addFamily": "新增字型家族",
       "defaultFamilies": "預設字型家族",
       "description": "設定文字圖層未指定字型家族時使用的有序字型堆疊。",
-      "empty": "沒有預設字型家族。Koharu 將使用系統後備字型。",
+      "empty": "沒有預設字型家族。Kokoro 將使用系統後備字型。",
       "familyLabel": "預設字型家族 {{index}}",
       "fontFallback": "後備字型",
-      "fontFallbackDescription": "Koharu 使用第一個支援該文字的可用字型家族。",
+      "fontFallbackDescription": "Kokoro 使用第一個支援該文字的可用字型家族。",
       "loadError": "無法載入字型。仍可移除現有字型家族。",
       "loadingFonts": "正在載入字型…",
       "removeFamily": "移除 {{family}}",
@@ -479,7 +444,7 @@
     "loadingProjects": "正在載入專案…",
     "newDescription": "為頁面、翻譯和匯出建立乾淨的工作區。",
     "newProject": "新建專案",
-    "projectKind": "Koharu 專案",
+    "projectKind": "Kokoro 專案",
     "projectList": "專案",
     "projectName": "專案名稱",
     "projectNamePlaceholder": "我的新專案",
@@ -489,9 +454,9 @@
   },
   "startup": {
     "description": "正在載入本機 AI 執行環境並準備工作區。首次啟動可能需要一些時間。",
-    "opening": "正在開啟 Koharu…",
+    "opening": "正在開啟 Kokoro…",
     "status": "正在初始化本機執行環境",
-    "title": "正在準備 Koharu"
+    "title": "正在準備 Kokoro"
   },
   "status": {
     "zoom": "縮放"
@@ -513,12 +478,12 @@
   },
   "updater": {
     "available": {
-      "description": "Koharu <strong>{{version}}</strong> 已準備好安裝",
+      "description": "Kokoro <strong>{{version}}</strong> 已準備好安裝",
       "title": "有可用更新"
     },
     "close": "關閉",
     "downloading": {
-      "subtitle": "Koharu {{version}}",
+      "subtitle": "Kokoro {{version}}",
       "title": "正在下載更新…"
     },
     "error": {

@@ -136,6 +136,70 @@ pub(crate) async fn set_translation(
     Ok(())
 }
 
+/// One entry of a bulk translation write.
+#[derive(Clone, Debug, Deserialize, Type)]
+pub struct TranslationUpdate {
+    pub layer: EntityId,
+    pub text: Option<String>,
+}
+
+#[tauri::command]
+#[specta::specta]
+pub(crate) async fn set_translations(
+    updates: Vec<TranslationUpdate>,
+    desktop: State<'_, Desktop>,
+    project: State<'_, CurrentProject>,
+    canvas_channel: State<'_, CanvasChannel>,
+) -> Result<(), Error> {
+    let (commit, page) = {
+        let mut project = project.project.lock().await;
+        let project = project.as_mut().context("no project is open")?;
+        let commit = project
+            .set_translations(
+                updates
+                    .into_iter()
+                    .map(|update| (update.layer, update.text)),
+            )
+            .await?;
+        project.record_commit(&commit);
+        (commit, project.active_page())
+    };
+    let canvas = synchronize_canvas(&desktop, &commit, page).await?;
+    canvas_channel.channel.publish(canvas);
+    Ok(())
+}
+
+/// Rewrite existing translations through the stored glossary.
+///
+/// Returns the number of layers that changed. Everything lands in one commit,
+/// so one undo call reverts the whole pass.
+#[tauri::command]
+#[specta::specta]
+pub(crate) async fn apply_glossary(
+    desktop: State<'_, Desktop>,
+    project: State<'_, CurrentProject>,
+    canvas_channel: State<'_, CanvasChannel>,
+) -> Result<u32, Error> {
+    let entries = koharu_translator::Glossary::load()?.read()?.entries.clone();
+    let (commit, page, changed) = {
+        let mut project = project.project.lock().await;
+        let project = project.as_mut().context("no project is open")?;
+        match project.apply_glossary(&entries).await? {
+            Some((commit, changed)) => {
+                project.record_commit(&commit);
+                (Some(commit), project.active_page(), changed)
+            }
+            None => (None, project.active_page(), 0),
+        }
+    };
+    let Some(commit) = commit else {
+        return Ok(0);
+    };
+    let canvas = synchronize_canvas(&desktop, &commit, page).await?;
+    canvas_channel.channel.publish(canvas);
+    Ok(u32::try_from(changed).unwrap_or(u32::MAX))
+}
+
 #[tauri::command]
 #[specta::specta]
 pub(crate) async fn set_typography(

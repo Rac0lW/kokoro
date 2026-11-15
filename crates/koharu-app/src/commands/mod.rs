@@ -1,4 +1,3 @@
-pub(crate) mod agent;
 pub(crate) mod canvas;
 pub(crate) mod editing;
 pub(crate) mod fonts;
@@ -24,6 +23,12 @@ where
 {
     fn from(error: E) -> Self {
         Self(error.into())
+    }
+}
+
+impl std::fmt::Display for Error {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        write!(formatter, "{:#}", self.0)
     }
 }
 
@@ -57,12 +62,6 @@ pub fn bindings() -> tauri_specta::Builder<tauri_runtime_cef::CefRuntime> {
 
     Builder::new()
         .commands(collect_commands![
-            agent::get_agent_status,
-            agent::login_agent,
-            agent::logout_agent,
-            agent::save_agent_config,
-            agent::run_agent,
-            agent::cancel_agent,
             lifecycle::subscribe,
             lifecycle::get_project,
             lifecycle::get_pages,
@@ -79,6 +78,8 @@ pub fn bindings() -> tauri_specta::Builder<tauri_runtime_cef::CefRuntime> {
             editing::move_page,
             editing::set_source_text,
             editing::set_translation,
+            editing::set_translations,
+            editing::apply_glossary,
             editing::set_typography,
             editing::set_geometry,
             editing::set_visibility,
@@ -89,6 +90,7 @@ pub fn bindings() -> tauri_specta::Builder<tauri_runtime_cef::CefRuntime> {
             processing::process,
             processing::stop_job,
             output::export,
+            output::export_to_path,
             output::get_thumbnail,
             fonts::get_fonts,
             fonts::get_font_preview,

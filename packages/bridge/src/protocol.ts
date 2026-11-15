@@ -6,12 +6,6 @@ import { invoke as __TAURI_INVOKE, Channel } from "@tauri-apps/api/core";
 
 /** Commands */
 export const commands = {
-	getAgentStatus: () => __TAURI_INVOKE<AgentStatus>("get_agent_status"),
-	loginAgent: (onEvent: Channel<LoginEvent>) => __TAURI_INVOKE<AgentStatus>("login_agent", { onEvent }),
-	logoutAgent: () => __TAURI_INVOKE<AgentStatus>("logout_agent"),
-	saveAgentConfig: (config: Config) => __TAURI_INVOKE<Config>("save_agent_config", { config }),
-	runAgent: (prompt: string, onEvent: Channel<Event>) => __TAURI_INVOKE<RunId>("run_agent", { prompt, onEvent }),
-	cancelAgent: (run: RunId) => __TAURI_INVOKE<null>("cancel_agent", { run }),
 	subscribe: (onCanvas: Channel<CanvasState>, onJob: Channel<Job>, onDownload: Channel<Download>, onResources: Channel<ModelResources>, onProject: Channel<ProjectInfo | null>) => __TAURI_INVOKE<StartupState>("subscribe", { onCanvas, onJob, onDownload, onResources, onProject }),
 	getProject: () => __TAURI_INVOKE<ProjectInfo | null>("get_project"),
 	getPages: () => __TAURI_INVOKE<PageSummary[]>("get_pages"),
@@ -28,6 +22,14 @@ export const commands = {
 	movePage: (page: EntityId, index: number) => __TAURI_INVOKE<null>("move_page", { page, index }),
 	setSourceText: (layer: EntityId, text: string) => __TAURI_INVOKE<null>("set_source_text", { layer, text }),
 	setTranslation: (layer: EntityId, text: string | null) => __TAURI_INVOKE<null>("set_translation", { layer, text }),
+	setTranslations: (updates: TranslationUpdate[]) => __TAURI_INVOKE<null>("set_translations", { updates }),
+	/**
+	 *  Rewrite existing translations through the stored glossary.
+	 * 
+	 *  Returns the number of layers that changed. Everything lands in one commit,
+	 *  so one undo call reverts the whole pass.
+	 */
+	applyGlossary: () => __TAURI_INVOKE<number>("apply_glossary"),
 	setTypography: (updates: TypographyUpdate[]) => __TAURI_INVOKE<null>("set_typography", { updates }),
 	setGeometry: (updates: GeometryUpdate[]) => __TAURI_INVOKE<null>("set_geometry", { updates }),
 	setVisibility: (layers: EntityId[], visible: boolean | null, opacity: number | null) => __TAURI_INVOKE<null>("set_visibility", { layers, visible, opacity }),
@@ -38,6 +40,8 @@ export const commands = {
 	process: (scope: Scope, operation: Operation) => __TAURI_INVOKE<JobId>("process", { scope, operation }),
 	stopJob: (job: JobId) => __TAURI_INVOKE<null>("stop_job", { job }),
 	export: (format: ExportFormat) => __TAURI_INVOKE<null>("export", { format }),
+	/**  Export to a known destination. Agents use this instead of the file dialog. */
+	exportToPath: (destination: string, format: ExportFormat) => __TAURI_INVOKE<null>("export_to_path", { destination, format }),
 	getThumbnail: (page: EntityId) => __TAURI_INVOKE<ThumbnailBytes>("get_thumbnail", { page }),
 	getFonts: () => __TAURI_INVOKE<FontFamily[]>("get_fonts"),
 	getFontPreview: (familyName: string) => __TAURI_INVOKE<FontPreviewBytes>("get_font_preview", { familyName }),
@@ -58,19 +62,6 @@ export const commands = {
 };
 
 /* Types */
-export type Account = {
-	id: string,
-	email: string | null,
-	plan: string | null,
-};
-
-export type AgentStatus = {
-	account: Account | null,
-	models: CodexModel[],
-	config: Config,
-	running: RunId | null,
-};
-
 export type AnalysisRegion = {
 	id: EntityId,
 	parent: EntityId | null,
@@ -106,17 +97,6 @@ export type CanvasState = {
 };
 
 export type ClaudeConfig = Record<string, never>;
-
-export type CodexModel = {
-	id: string,
-	name: string,
-	reasoning: Reasoning[],
-};
-
-export type Config = {
-	model: string | null,
-	reasoning: Reasoning,
-};
 
 export type CredentialInput = {
 	configured: boolean,
@@ -156,8 +136,6 @@ export type DownloadState = "running" | "finished" | "failed";
 export type EntityId = string;
 
 export type Error = string;
-
-export type Event = { type: "started"; run: RunId } | { type: "text_delta"; run: RunId; delta: string } | { type: "reasoning_delta"; run: RunId; delta: string } | { type: "tool_started"; run: RunId; call_id: string; name: string } | { type: "tool_finished"; run: RunId; call_id: string; name: string; changed: boolean; output: string } | { type: "completed"; run: RunId; message: string } | { type: "failed"; run: RunId; message: string } | { type: "cancelled"; run: RunId };
 
 export type ExportFormat = "png" | "psd" | "cbz";
 
@@ -287,8 +265,6 @@ export type LmStudioConfig = {
 
 export type LocalConfig = Record<string, never>;
 
-export type LoginEvent = { type: "progress"; message: string } | { type: "device_code"; verification_url: string; user_code: string };
-
 export type MiniMaxConfig = Record<string, never>;
 
 export type Model = {
@@ -322,6 +298,10 @@ export type OpenAiCompatibleConfig = {
 };
 
 export type OpenAiConfig = Record<string, never>;
+
+export type OpenCodeConfig = {
+	base_url?: string | null,
+};
 
 export type OpenRouterConfig = Record<string, never>;
 
@@ -402,9 +382,9 @@ export type ProjectSummary = {
 	name: string,
 };
 
-export type Provider = "local" | "openai" | "gemini" | "claude" | "grok" | "minimax" | "deepseek" | "openai-compatible" | "openrouter" | "lm-studio" | "deepl" | "google-cloud-translation" | "caiyun";
+export type Provider = "local" | "openai" | "gemini" | "claude" | "grok" | "minimax" | "deepseek" | "openai-compatible" | "opencode" | "openrouter" | "lm-studio" | "deepl" | "google-cloud-translation" | "caiyun";
 
-export type ProviderConfig = { provider: "local"; settings: LocalConfig } | { provider: "openai"; settings: OpenAiConfig } | { provider: "gemini"; settings: GeminiConfig } | { provider: "claude"; settings: ClaudeConfig } | { provider: "grok"; settings: GrokConfig } | { provider: "minimax"; settings: MiniMaxConfig } | { provider: "deepseek"; settings: DeepSeekConfig } | { provider: "openai-compatible"; settings: OpenAiCompatibleConfig } | { provider: "openrouter"; settings: OpenRouterConfig } | { provider: "lm-studio"; settings: LmStudioConfig } | { provider: "deepl"; settings: DeepLConfig } | { provider: "google-cloud-translation"; settings: GoogleCloudConfig } | { provider: "caiyun"; settings: CaiyunConfig };
+export type ProviderConfig = { provider: "local"; settings: LocalConfig } | { provider: "openai"; settings: OpenAiConfig } | { provider: "gemini"; settings: GeminiConfig } | { provider: "claude"; settings: ClaudeConfig } | { provider: "grok"; settings: GrokConfig } | { provider: "minimax"; settings: MiniMaxConfig } | { provider: "deepseek"; settings: DeepSeekConfig } | { provider: "openai-compatible"; settings: OpenAiCompatibleConfig } | { provider: "opencode"; settings: OpenCodeConfig } | { provider: "openrouter"; settings: OpenRouterConfig } | { provider: "lm-studio"; settings: LmStudioConfig } | { provider: "deepl"; settings: DeepLConfig } | { provider: "google-cloud-translation"; settings: GoogleCloudConfig } | { provider: "caiyun"; settings: CaiyunConfig };
 
 export type ProviderPreference = {
 	name: string,
@@ -424,16 +404,12 @@ export type Quantization = {
 
 export type RasterLayerKind = "cleanup" | "paint";
 
-export type Reasoning = "low" | "medium" | "high" | "xhigh" | "max" | "ultra";
-
 export type Revision = number;
 
 export type RoremMixedConfig = {
 	prompt?: string,
 	negative_prompt?: string,
 };
-
-export type RunId = string;
 
 export type Scope = { scope: "project" } | { scope: "pages"; value: EntityId[] } | { scope: "region"; value: {
 	page: EntityId,
@@ -482,6 +458,12 @@ export type TranslationConfig = {
 	generation: GenerationConfig,
 	target_language: string,
 	instructions: string | null,
+};
+
+/**  One entry of a bulk translation write. */
+export type TranslationUpdate = {
+	layer: EntityId,
+	text: string | null,
 };
 
 export type TypesettingConfig = {

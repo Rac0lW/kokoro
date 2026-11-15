@@ -18,45 +18,10 @@
     "stop": "停止",
     "title": "活动"
   },
-  "agent": {
-    "account": "ChatGPT 账户",
-    "applying": "正在应用项目更改…",
-    "automatic": "自动",
-    "cancel": "取消",
-    "cancelled": "已取消。",
-    "deviceCode": "设备代码",
-    "deviceCodeHint": "浏览器已打开。输入此代码以授权 Koharu。",
-    "emptyDescription": "让智能体检查、翻译、编辑或处理此项目。它只会在需要时查看页面图像。",
-    "emptyTitle": "需要 Koharu 做什么？",
-    "failed": "智能体请求失败。",
-    "loading": "正在加载 Codex…",
-    "message": "向 Koharu 智能体发送消息",
-    "model": "Codex 模型",
-    "placeholder": "让 Koharu 处理此项目…",
-    "properties": "属性",
-    "reasoning": "推理",
-    "reasoningLevels": {
-      "high": "高",
-      "low": "低",
-      "max": "最大",
-      "medium": "中",
-      "ultra": "超强",
-      "xhigh": "超高"
-    },
-    "send": "发送",
-    "signIn": "使用 Codex 登录",
-    "signInDescription": "使用你的 ChatGPT 订阅登录。Koharu 使用设备代码身份验证，绝不会要求提供 API 密钥。",
-    "signInTitle": "连接 Codex",
-    "signOut": "退出登录",
-    "signingIn": "正在等待登录…",
-    "thinking": "正在思考…",
-    "title": "智能体",
-    "working": "正在工作…"
-  },
   "canvas": {
     "empty": "请选择页面以开始。",
     "fit": "适应窗口",
-    "surface": "Koharu 画布",
+    "surface": "Kokoro 画布",
     "unavailable": "WebGPU 画布不可用"
   },
   "colorPicker": {
@@ -73,7 +38,7 @@
     "reset": "重置"
   },
   "errors": {
-    "fatalTitle": "Koharu 无法继续运行",
+    "fatalTitle": "Kokoro 无法继续运行",
     "tryAgain": "重试"
   },
   "fontPicker": {
@@ -334,6 +299,7 @@
     "minimax": "MiniMax 语言模型。",
     "openai": "OpenAI 语言模型。",
     "openai-compatible": "任何提供 OpenAI 兼容 API 的服务器。",
+    "opencode": "通过 OpenAI 兼容网关使用 OpenCode Console 的模型。",
     "openrouter": "通过 OpenRouter 路由的模型。"
   },
   "resources": {
@@ -456,10 +422,10 @@
       "addFamily": "添加字体系列",
       "defaultFamilies": "默认字体系列",
       "description": "设置文本图层未指定字体系列时使用的有序字体堆栈。",
-      "empty": "没有默认字体系列。Koharu 将使用系统后备字体。",
+      "empty": "没有默认字体系列。Kokoro 将使用系统后备字体。",
       "familyLabel": "默认字体系列 {{index}}",
       "fontFallback": "后备字体",
-      "fontFallbackDescription": "Koharu 使用第一个支持该文本的可用字体系列。",
+      "fontFallbackDescription": "Kokoro 使用第一个支持该文本的可用字体系列。",
       "loadError": "无法加载字体。仍可删除现有字体系列。",
       "loadingFonts": "正在加载字体…",
       "removeFamily": "删除 {{family}}",
@@ -479,7 +445,7 @@
     "loadingProjects": "正在加载项目…",
     "newDescription": "为页面、翻译和导出创建一个干净的工作区。",
     "newProject": "新建项目",
-    "projectKind": "Koharu 项目",
+    "projectKind": "Kokoro 项目",
     "projectList": "项目",
     "projectName": "项目名称",
     "projectNamePlaceholder": "我的新项目",
@@ -489,9 +455,9 @@
   },
   "startup": {
     "description": "正在加载本地 AI 运行时并准备工作区。首次启动可能需要一些时间。",
-    "opening": "正在打开 Koharu…",
+    "opening": "正在打开 Kokoro…",
     "status": "正在初始化本地运行时",
-    "title": "正在准备 Koharu"
+    "title": "正在准备 Kokoro"
   },
   "status": {
     "zoom": "缩放"
@@ -513,12 +479,12 @@
   },
   "updater": {
     "available": {
-      "description": "Koharu <strong>{{version}}</strong> 已准备好安装",
+      "description": "Kokoro <strong>{{version}}</strong> 已准备好安装",
       "title": "有可用更新"
     },
     "close": "关闭",
     "downloading": {
-      "subtitle": "Koharu {{version}}",
+      "subtitle": "Kokoro {{version}}",
       "title": "正在下载更新…"
     },
     "error": {
