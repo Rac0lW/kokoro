@@ -1,72 +1,18 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1640" height="787" viewBox="0 0 1640 787">
-<defs><marker id="a" markerWidth="10" markerHeight="8" refX="9" refY="4" orient="auto"><path d="M0,0 L10,4 L0,8 z" fill="#e03131"/></marker></defs>
+<svg xmlns="http://www.w3.org/2000/svg" width="1410" height="564" viewBox="0 0 1410 564">
+<defs><marker id="a" markerWidth="10" markerHeight="8" refX="9" refY="4" orient="auto"><path d="M0,0 L10,4 L0,8 z" fill="#1e1e1e"/></marker></defs>
 <rect width="100%" height="100%" fill="#ffffff"/>
-<rect x="80.0" y="175.0" width="470.0" height="58.0" rx="8" fill="#b2f2bb" stroke="#1e1e1e" stroke-width="2"/>
-<text x="98.0" y="207.2" font-family="Helvetica, Arial, 'Hiragino Sans', 'Noto Sans CJK SC', 'PingFang SC', sans-serif" font-size="22" fill="#1e1e1e">1 · EPUB 导入</text>
-<text x="98.0" y="223.9" font-family="Helvetica, Arial, 'Hiragino Sans', 'Noto Sans CJK SC', 'PingFang SC', sans-serif" font-size="14" fill="#495057">feat 8c080d63</text>
-<rect x="80.0" y="233.0" width="470.0" height="392.0" rx="8" fill="#d3f9d8" stroke="#1e1e1e" stroke-width="2"/>
-<text x="96.0" y="261.9" font-family="Helvetica, Arial, 'Hiragino Sans', 'Noto Sans CJK SC', 'PingFang SC', sans-serif" font-size="14" fill="#1e1e1e">新增 crates/koharu-app/src/commands/import/epub.rs</text>
-<text x="96.0" y="283.9" font-family="Helvetica, Arial, 'Hiragino Sans', 'Noto Sans CJK SC', 'PingFang SC', sans-serif" font-size="14" fill="#1e1e1e">Format::Epub 加入枚举 + 文件对话框 filter</text>
-<text x="96.0" y="327.9" font-family="Helvetica, Arial, 'Hiragino Sans', 'Noto Sans CJK SC', 'PingFang SC', sans-serif" font-size="14" fill="#1e1e1e">读取链路：</text>
-<text x="96.0" y="349.9" font-family="Helvetica, Arial, 'Hiragino Sans', 'Noto Sans CJK SC', 'PingFang SC', sans-serif" font-size="14" fill="#1e1e1e">  META-INF/container.xml</text>
-<text x="96.0" y="371.9" font-family="Helvetica, Arial, 'Hiragino Sans', 'Noto Sans CJK SC', 'PingFang SC', sans-serif" font-size="14" fill="#1e1e1e">  → 包文档 .opf（manifest + spine）</text>
-<text x="96.0" y="393.9" font-family="Helvetica, Arial, 'Hiragino Sans', 'Noto Sans CJK SC', 'PingFang SC', sans-serif" font-size="14" fill="#1e1e1e">  → 每个 spine 文档里的那张图</text>
-<text x="96.0" y="437.9" font-family="Helvetica, Arial, 'Hiragino Sans', 'Noto Sans CJK SC', 'PingFang SC', sans-serif" font-size="14" fill="#1e1e1e">为什么不能排序解压：</text>
-<text x="96.0" y="459.9" font-family="Helvetica, Arial, 'Hiragino Sans', 'Noto Sans CJK SC', 'PingFang SC', sans-serif" font-size="14" fill="#1e1e1e">  这本书的图片名是打乱的</text>
-<text x="96.0" y="481.9" font-family="Helvetica, Arial, 'Hiragino Sans', 'Noto Sans CJK SC', 'PingFang SC', sans-serif" font-size="14" fill="#1e1e1e">  moe-002513.jpg / moe-000305.jpg</text>
-<text x="96.0" y="503.9" font-family="Helvetica, Arial, 'Hiragino Sans', 'Noto Sans CJK SC', 'PingFang SC', sans-serif" font-size="14" fill="#1e1e1e">  真实页序只存在于 spine</text>
-<text x="96.0" y="547.9" font-family="Helvetica, Arial, 'Hiragino Sans', 'Noto Sans CJK SC', 'PingFang SC', sans-serif" font-size="14" fill="#1e1e1e">取图规则：只收能解码成光栅图的成员</text>
-<text x="96.0" y="569.9" font-family="Helvetica, Arial, 'Hiragino Sans', 'Noto Sans CJK SC', 'PingFang SC', sans-serif" font-size="14" fill="#1e1e1e">  所以样式表/字体/导航自动被排除</text>
-<text x="96.0" y="591.9" font-family="Helvetica, Arial, 'Hiragino Sans', 'Noto Sans CJK SC', 'PingFang SC', sans-serif" font-size="14" fill="#1e1e1e">  也能收进 OPF 未列出的 theendinfo.png</text>
-<rect x="80.0" y="643.0" width="470.0" height="104.0" rx="8" fill="#ffffff" stroke="#868e96" stroke-width="2" stroke-dasharray="6 4"/>
-<text x="96.0" y="664.0" font-family="Helvetica, Arial, 'Hiragino Sans', 'Noto Sans CJK SC', 'PingFang SC', sans-serif" font-size="13" fill="#2b8a3e">验证</text>
-<text x="96.0" y="685.9" font-family="Helvetica, Arial, 'Hiragino Sans', 'Noto Sans CJK SC', 'PingFang SC', sans-serif" font-size="14" fill="#2b8a3e">真实文件 155 页</text>
-<text x="96.0" y="705.9" font-family="Helvetica, Arial, 'Hiragino Sans', 'Noto Sans CJK SC', 'PingFang SC', sans-serif" font-size="14" fill="#2b8a3e">页序与独立解析逐字节一致</text>
-<text x="96.0" y="725.9" font-family="Helvetica, Arial, 'Hiragino Sans', 'Noto Sans CJK SC', 'PingFang SC', sans-serif" font-size="14" fill="#2b8a3e">9 个测试通过</text>
-<rect x="605.0" y="175.0" width="470.0" height="58.0" rx="8" fill="#ffc9c9" stroke="#1e1e1e" stroke-width="2"/>
-<text x="623.0" y="207.2" font-family="Helvetica, Arial, 'Hiragino Sans', 'Noto Sans CJK SC', 'PingFang SC', sans-serif" font-size="22" fill="#1e1e1e">2 · read_timeout 修复</text>
-<text x="623.0" y="223.9" font-family="Helvetica, Arial, 'Hiragino Sans', 'Noto Sans CJK SC', 'PingFang SC', sans-serif" font-size="14" fill="#495057">fix 2ac46703</text>
-<rect x="605.0" y="233.0" width="470.0" height="348.0" rx="8" fill="#ffe3e3" stroke="#1e1e1e" stroke-width="2"/>
-<text x="621.0" y="261.9" font-family="Helvetica, Arial, 'Hiragino Sans', 'Noto Sans CJK SC', 'PingFang SC', sans-serif" font-size="14" fill="#1e1e1e">crates/koharu-runtime/src/network.rs</text>
-<text x="621.0" y="283.9" font-family="Helvetica, Arial, 'Hiragino Sans', 'Noto Sans CJK SC', 'PingFang SC', sans-serif" font-size="14" fill="#1e1e1e">共享 HTTP 客户端只设了 connect_timeout</text>
-<text x="621.0" y="305.9" font-family="Helvetica, Arial, 'Hiragino Sans', 'Noto Sans CJK SC', 'PingFang SC', sans-serif" font-size="14" fill="#1e1e1e">.read_timeout(config.read_timeout) ← 加这一行</text>
-<text x="621.0" y="349.9" font-family="Helvetica, Arial, 'Hiragino Sans', 'Noto Sans CJK SC', 'PingFang SC', sans-serif" font-size="14" fill="#1e1e1e">故障链：</text>
-<text x="621.0" y="371.9" font-family="Helvetica, Arial, 'Hiragino Sans', 'Noto Sans CJK SC', 'PingFang SC', sans-serif" font-size="14" fill="#1e1e1e">  ① 服务端接了连接但不再返回数据</text>
-<text x="621.0" y="393.9" font-family="Helvetica, Arial, 'Hiragino Sans', 'Noto Sans CJK SC', 'PingFang SC', sans-serif" font-size="14" fill="#1e1e1e">  ② 请求永不结束</text>
-<text x="621.0" y="415.9" font-family="Helvetica, Arial, 'Hiragino Sans', 'Noto Sans CJK SC', 'PingFang SC', sans-serif" font-size="14" fill="#1e1e1e">  ③ job 一直 running</text>
-<text x="621.0" y="437.9" font-family="Helvetica, Arial, 'Hiragino Sans', 'Noto Sans CJK SC', 'PingFang SC', sans-serif" font-size="14" fill="#1e1e1e">  ④ 任务末尾的 stops.remove 执行不到</text>
-<text x="621.0" y="459.9" font-family="Helvetica, Arial, 'Hiragino Sans', 'Noto Sans CJK SC', 'PingFang SC', sans-serif" font-size="14" fill="#1e1e1e">  ⑤ Run 按钮 disabled(true) 永久变灰</text>
-<text x="621.0" y="503.9" font-family="Helvetica, Arial, 'Hiragino Sans', 'Noto Sans CJK SC', 'PingFang SC', sans-serif" font-size="14" fill="#1e1e1e">为什么用 read_timeout 而不是 timeout：</text>
-<text x="621.0" y="525.9" font-family="Helvetica, Arial, 'Hiragino Sans', 'Noto Sans CJK SC', 'PingFang SC', sans-serif" font-size="14" fill="#1e1e1e">  它只限制字节间隔</text>
-<text x="621.0" y="547.9" font-family="Helvetica, Arial, 'Hiragino Sans', 'Noto Sans CJK SC', 'PingFang SC', sans-serif" font-size="14" fill="#1e1e1e">  长但持续输出的流式响应不受影响</text>
-<rect x="605.0" y="599.0" width="470.0" height="104.0" rx="8" fill="#ffffff" stroke="#868e96" stroke-width="2" stroke-dasharray="6 4"/>
-<text x="621.0" y="620.0" font-family="Helvetica, Arial, 'Hiragino Sans', 'Noto Sans CJK SC', 'PingFang SC', sans-serif" font-size="13" fill="#2b8a3e">验证</text>
-<text x="621.0" y="641.9" font-family="Helvetica, Arial, 'Hiragino Sans', 'Noto Sans CJK SC', 'PingFang SC', sans-serif" font-size="14" fill="#2b8a3e">只接受连接不响应的服务端</text>
-<text x="621.0" y="661.9" font-family="Helvetica, Arial, 'Hiragino Sans', 'Noto Sans CJK SC', 'PingFang SC', sans-serif" font-size="14" fill="#2b8a3e">改前 8s 仍在挂</text>
-<text x="621.0" y="681.9" font-family="Helvetica, Arial, 'Hiragino Sans', 'Noto Sans CJK SC', 'PingFang SC', sans-serif" font-size="14" fill="#2b8a3e">改后 2.0s 超时失败</text>
-<rect x="1130.0" y="175.0" width="470.0" height="58.0" rx="8" fill="#a5d8ff" stroke="#1e1e1e" stroke-width="2"/>
-<text x="1148.0" y="207.2" font-family="Helvetica, Arial, 'Hiragino Sans', 'Noto Sans CJK SC', 'PingFang SC', sans-serif" font-size="22" fill="#1e1e1e">3 · 开发循环</text>
-<text x="1148.0" y="223.9" font-family="Helvetica, Arial, 'Hiragino Sans', 'Noto Sans CJK SC', 'PingFang SC', sans-serif" font-size="14" fill="#495057">chore 1b1cbe17</text>
-<rect x="1130.0" y="233.0" width="470.0" height="238.0" rx="8" fill="#d0ebff" stroke="#1e1e1e" stroke-width="2"/>
-<text x="1146.0" y="261.9" font-family="Helvetica, Arial, 'Hiragino Sans', 'Noto Sans CJK SC', 'PingFang SC', sans-serif" font-size="14" fill="#1e1e1e">新增 scripts/dev-reload.ts</text>
-<text x="1146.0" y="283.9" font-family="Helvetica, Arial, 'Hiragino Sans', 'Noto Sans CJK SC', 'PingFang SC', sans-serif" font-size="14" fill="#1e1e1e">  cargo build → 等旧进程退出</text>
-<text x="1146.0" y="305.9" font-family="Helvetica, Arial, 'Hiragino Sans', 'Noto Sans CJK SC', 'PingFang SC', sans-serif" font-size="14" fill="#1e1e1e">  → 拷贝二进制进 bundle → open</text>
-<text x="1146.0" y="349.9" font-family="Helvetica, Arial, 'Hiragino Sans', 'Noto Sans CJK SC', 'PingFang SC', sans-serif" font-size="14" fill="#1e1e1e">它省掉的部分：</text>
-<text x="1146.0" y="371.9" font-family="Helvetica, Arial, 'Hiragino Sans', 'Noto Sans CJK SC', 'PingFang SC', sans-serif" font-size="14" fill="#1e1e1e">  重新 bundling .app</text>
-<text x="1146.0" y="393.9" font-family="Helvetica, Arial, 'Hiragino Sans', 'Noto Sans CJK SC', 'PingFang SC', sans-serif" font-size="14" fill="#1e1e1e">  Building CEF helper</text>
-<text x="1146.0" y="415.9" font-family="Helvetica, Arial, 'Hiragino Sans', 'Noto Sans CJK SC', 'PingFang SC', sans-serif" font-size="14" fill="#1e1e1e">  Updating crates.io index</text>
-<text x="1146.0" y="437.9" font-family="Helvetica, Arial, 'Hiragino Sans', 'Noto Sans CJK SC', 'PingFang SC', sans-serif" font-size="14" fill="#1e1e1e">  beforeDevCommand 里的 wasm 构建</text>
-<rect x="1130.0" y="489.0" width="470.0" height="84.0" rx="8" fill="#ffffff" stroke="#868e96" stroke-width="2" stroke-dasharray="6 4"/>
-<text x="1146.0" y="510.0" font-family="Helvetica, Arial, 'Hiragino Sans', 'Noto Sans CJK SC', 'PingFang SC', sans-serif" font-size="13" fill="#2b8a3e">验证</text>
-<text x="1146.0" y="531.9" font-family="Helvetica, Arial, 'Hiragino Sans', 'Noto Sans CJK SC', 'PingFang SC', sans-serif" font-size="14" fill="#2b8a3e">cargo tauri dev   52s</text>
-<text x="1146.0" y="551.9" font-family="Helvetica, Arial, 'Hiragino Sans', 'Noto Sans CJK SC', 'PingFang SC', sans-serif" font-size="14" fill="#2b8a3e">dev-reload.ts      3.6s</text>
-<rect x="1130.0" y="587.0" width="470.0" height="124.0" rx="8" fill="#ffffff" stroke="#868e96" stroke-width="2" stroke-dasharray="6 4"/>
-<text x="1146.0" y="608.0" font-family="Helvetica, Arial, 'Hiragino Sans', 'Noto Sans CJK SC', 'PingFang SC', sans-serif" font-size="13" fill="#868e96">环境侧修正（未提交，不进 commit）</text>
-<text x="1146.0" y="629.9" font-family="Helvetica, Arial, 'Hiragino Sans', 'Noto Sans CJK SC', 'PingFang SC', sans-serif" font-size="14" fill="#868e96">CEF Local State: devtools allowed=false 卡住 CDP</text>
-<text x="1146.0" y="649.9" font-family="Helvetica, Arial, 'Hiragino Sans', 'Noto Sans CJK SC', 'PingFang SC', sans-serif" font-size="14" fill="#868e96">launchctl setenv 注入代理</text>
-<text x="1146.0" y="669.9" font-family="Helvetica, Arial, 'Hiragino Sans', 'Noto Sans CJK SC', 'PingFang SC', sans-serif" font-size="14" fill="#868e96">撤销我造成的 launchd keepalive</text>
-<text x="1146.0" y="689.9" font-family="Helvetica, Arial, 'Hiragino Sans', 'Noto Sans CJK SC', 'PingFang SC', sans-serif" font-size="14" fill="#868e96">lld 实测更慢，已撤回</text>
-<line x1="1041.0" y1="363.0" x2="1041.0" y2="463.0" stroke="#e03131" stroke-width="2" marker-end="url(#a)"/>
-<text x="80.0" y="86.3" font-family="Helvetica, Arial, 'Hiragino Sans', 'Noto Sans CJK SC', 'PingFang SC', sans-serif" font-size="34" fill="#1e1e1e">Koharu 本次改动总览</text>
-<text x="80.0" y="118.8" font-family="Helvetica, Arial, 'Hiragino Sans', 'Noto Sans CJK SC', 'PingFang SC', sans-serif" font-size="15" fill="#868e96">fork: Rac0lW/koharu · main · 3 commits 已推送</text>
+<text x="80.0" y="77.3" font-family="Helvetica, Arial, 'Hiragino Sans', 'Noto Sans CJK SC', 'PingFang SC', sans-serif" font-size="34" fill="#1e1e1e">重启 app：52s → 3.6s</text>
+<text x="80.0" y="109.8" font-family="Helvetica, Arial, 'Hiragino Sans', 'Noto Sans CJK SC', 'PingFang SC', sans-serif" font-size="15" fill="#868e96">最新改动 chore 1b1cbe17 · 与改动之前对照</text>
+<text x="112.0" y="237.9" font-family="Helvetica, Arial, 'Hiragino Sans', 'Noto Sans CJK SC', 'PingFang SC', sans-serif" font-size="76" fill="#e03131">52s</text>
+<rect x="110.0" y="292.0" width="470.0" height="72.0" rx="8" fill="#ffe3e3" stroke="#e03131" stroke-width="2"/>
+<text x="126.0" y="333.0" font-family="Helvetica, Arial, 'Hiragino Sans', 'Noto Sans CJK SC', 'PingFang SC', sans-serif" font-size="17" fill="#e03131">每次重启都重新打包 .app 并构建 CEF helper</text>
+<text x="920.0" y="237.9" font-family="Helvetica, Arial, 'Hiragino Sans', 'Noto Sans CJK SC', 'PingFang SC', sans-serif" font-size="76" fill="#2b8a3e">3.6s</text>
+<rect x="900.0" y="292.0" width="470.0" height="72.0" rx="8" fill="#d3f9d8" stroke="#2b8a3e" stroke-width="2"/>
+<text x="916.0" y="333.0" font-family="Helvetica, Arial, 'Hiragino Sans', 'Noto Sans CJK SC', 'PingFang SC', sans-serif" font-size="17" fill="#2b8a3e">只编译、拷贝、打开，跳过打包与 helper</text>
+<line x1="632.0" y1="328.0" x2="848.0" y2="328.0" stroke="#1e1e1e" stroke-width="4" marker-end="url(#a)"/>
+<text x="80.0" y="432.9" font-family="Helvetica, Arial, 'Hiragino Sans', 'Noto Sans CJK SC', 'PingFang SC', sans-serif" font-size="14" fill="#868e96">更早的两次改动</text>
+<rect x="110.0" y="452.0" width="560.0" height="72.0" rx="8" fill="#f1f3f5" stroke="#1e1e1e" stroke-width="2"/>
+<text x="126.0" y="493.0" font-family="Helvetica, Arial, 'Hiragino Sans', 'Noto Sans CJK SC', 'PingFang SC', sans-serif" font-size="17" fill="#1e1e1e">页序只在 spine 里，排序解压会打乱全书</text>
+<rect x="730.0" y="452.0" width="560.0" height="72.0" rx="8" fill="#f1f3f5" stroke="#1e1e1e" stroke-width="2"/>
+<text x="746.0" y="493.0" font-family="Helvetica, Arial, 'Hiragino Sans', 'Noto Sans CJK SC', 'PingFang SC', sans-serif" font-size="17" fill="#1e1e1e">缺了它，API 不响应就让 Run 永久变灰</text>
 </svg>
